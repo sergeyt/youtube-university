@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useMemo, useState } from "react";
-import { HStack, Stack, VStack, Box, Heading, Text } from "@chakra-ui/react";
+import { HStack, Stack, Box, Heading, Text } from "@chakra-ui/react";
 import YouTube from "react-youtube";
 
 type Props = {
@@ -13,16 +13,19 @@ const CourseView: React.FC<Props> = ({ data }) => {
     [data]
   );
   const [selectedLesson, setSelectedLesson] = useState(0);
+  const lesson = data.lessons[selectedLesson];
 
   return (
     <Stack>
-      <Heading size="md">{data.title}</Heading>
+      <Heading size="md">{data.title || lesson?.title}</Heading>
       <HStack>
-        <Box>
-          <YouTube videoId={data.lessons[selectedLesson].youtubeVideoId} />
+        <Box h="380px">
+          {lesson?.youtubeVideoId ? (
+            <YouTube videoId={lesson?.youtubeVideoId} />
+          ) : null}
         </Box>
         {/* lesson list */}
-        <Box h="100%" overflow="auto">
+        <Box h="380px" overflow="auto">
           <Stack>
             <Heading size="xs">
               {data.lessons.length} lessons ({_.round(totalDuration)}min)
