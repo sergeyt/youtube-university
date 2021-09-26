@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import CourseView from "components/CourseView";
 import { useAccessToken } from "components/GoogleAuth";
 import ErrorView from "components/ErrorView";
+import Page from "components/Layout";
 import useSWR from "swr";
 import { getPlaylistItems } from "youtube-api";
 import { Course } from "types";
@@ -31,9 +32,9 @@ export default function CoursePage() {
   });
 
   return (
-    <>
+    <Page>
       <ErrorView error={error} />
       {data ? <CourseView data={data} /> : null}
-    </>
+    </Page>
   );
 }

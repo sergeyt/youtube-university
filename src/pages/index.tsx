@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Box, Stack } from "@chakra-ui/react";
 import ErrorView from "components/ErrorView";
 import { useAccessToken } from "components/GoogleAuth";
+import Page from "components/Layout";
 import useSWR from "swr";
 import { getPlaylists } from "youtube-api";
 
@@ -26,13 +27,15 @@ export default function Home() {
   );
 
   return (
-    <Stack>
-      <ErrorView error={error} />
-      {_.map(data, (item) => (
-        <Box>
-          <Link href={`/course/${item.id}`}>{item.title}</Link>
-        </Box>
-      ))}
-    </Stack>
+    <Page>
+      <Stack>
+        <ErrorView error={error} />
+        {_.map(data, (item) => (
+          <Box>
+            <Link href={`/course/${item.id}`}>{item.title}</Link>
+          </Box>
+        ))}
+      </Stack>
+    </Page>
   );
 }
