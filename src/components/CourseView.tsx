@@ -2,6 +2,7 @@ import _ from "lodash";
 import { useMemo, useState } from "react";
 import { HStack, Stack, Box, Heading, Text } from "@chakra-ui/react";
 import YouTube from "react-youtube";
+import { Course, Lesson } from "types";
 
 type Props = {
   data: Course;

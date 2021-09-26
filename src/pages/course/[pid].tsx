@@ -4,6 +4,7 @@ import { useAccessToken } from "components/GoogleAuth";
 import ErrorView from "components/ErrorView";
 import useSWR from "swr";
 import { getPlaylistItems } from "youtube-api";
+import { Course } from "types";
 
 export default function CoursePage() {
   const router = useRouter();
