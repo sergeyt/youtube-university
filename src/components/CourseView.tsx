@@ -1,6 +1,17 @@
 import _ from "lodash";
 import { useMemo, useState } from "react";
-import { HStack, Stack, Box, Heading, Text } from "@chakra-ui/react";
+import {
+  HStack,
+  Stack,
+  Box,
+  Heading,
+  Text,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from "@chakra-ui/react";
 import YouTube from "react-youtube";
 import { Course, Lesson } from "types";
 
@@ -43,6 +54,16 @@ const CourseView: React.FC<Props> = ({ data }) => {
           </Stack>
         </Box>
       </HStack>
+      <Tabs>
+        <TabList>
+          <Tab>About Lesson</Tab>
+          <Tab>About</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>{lesson.description}</TabPanel>
+          <TabPanel>{data.description}</TabPanel>
+        </TabPanels>
+      </Tabs>
     </Stack>
   );
 };

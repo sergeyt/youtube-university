@@ -12,9 +12,11 @@ function makeClient(accessToken: string) {
 export async function getPlaylists({
   part = "snippet,contentDetails",
   accessToken,
+  maxResults = 100,
 }: {
   part?: string;
   accessToken: string;
+  maxResults?: number;
 }) {
   const http = makeClient(accessToken);
   const resp = await http.get(
@@ -23,7 +25,7 @@ export async function getPlaylists({
       params: {
         part,
         mine: true,
-        maxResults: 25,
+        maxResults,
       },
     }
   );
@@ -34,10 +36,12 @@ export async function getPlaylistItems({
   part = "snippet,contentDetails",
   playlistId,
   accessToken,
+  maxResults,
 }: {
   part?: string;
   playlistId: string;
   accessToken: string;
+  maxResults?: number;
 }) {
   const http = makeClient(accessToken);
   const resp = await http.get(
@@ -46,7 +50,7 @@ export async function getPlaylistItems({
       params: {
         part,
         playlistId,
-        maxResults: 25,
+        maxResults,
       },
     }
   );
