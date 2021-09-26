@@ -1,5 +1,4 @@
 import _ from "lodash";
-import Link from "next/link";
 import {
   Box,
   Stack,
@@ -9,59 +8,36 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
-import ErrorView from "components/ErrorView";
-import { useAccessToken } from "components/GoogleAuth";
 import Page from "components/Layout";
-import useSWR from "swr";
-import { getPlaylists } from "youtube-api";
+import YouTubePlaylists from "components/YouTubePlaylists";
+import UCFileGroups from "components/UploadcareFileGroups";
 
-export default function Home() {
-  const accessToken = useAccessToken();
-  const { data, error } = useSWR(
-    `/playlists?token=${accessToken}`,
-    async () => {
-      if (!accessToken) {
-        return [];
-      }
-      const resp = await getPlaylists({
-        accessToken,
-      });
-      return resp.items.map((t) => ({
-        id: t.id,
-        title: t.snippet.title,
-        description: t.snippet.description,
-      }));
-    }
-  );
+export async function getStaticProps() {
+  return {
+    props: {
+      uploadcare: {
+        publicKey: process.env.UC_PUBLIC_KEY,
+        secretKey: process.env.UC_SECRET_KEY,
+      },
+    },
+  };
+}
 
+export default function Home({ uploadcare }) {
   return (
     <Page>
       <Stack>
-        <ErrorView error={error} />
-        <Tabs>
+        <Tabs isLazy>
           <TabList>
             <Tab>YouTube</Tab>
             <Tab>UploadCare</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              {_.isEmpty(data) ? (
-                <Box m={3}>
-                  No data. Please login into your google account to view your
-                  video courses
-                </Box>
-              ) : null}
-              {_.map(data, (item) => (
-                <Box>
-                  <Link href={`/course/${item.id}`}>{item.title}</Link>
-                </Box>
-              ))}
+              <YouTubePlaylists />
             </TabPanel>
             <TabPanel>
-              <Box m={3}>
-                No data. Please login into your uploadcare account to view your
-                video courses
-              </Box>
+              <UCFileGroups apiConfig={uploadcare} />
             </TabPanel>
           </TabPanels>
         </Tabs>

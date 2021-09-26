@@ -1,4 +1,5 @@
 import axios from "axios";
+import { checkStatusOK } from "axios-utils";
 
 function makeClient(accessToken: string) {
   return axios.create({
@@ -29,6 +30,7 @@ export async function getPlaylists({
       },
     }
   );
+  checkStatusOK(resp);
   return resp.data;
 }
 
@@ -54,5 +56,6 @@ export async function getPlaylistItems({
       },
     }
   );
+  checkStatusOK(resp);
   return resp.data;
 }

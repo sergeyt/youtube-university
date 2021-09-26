@@ -12,6 +12,7 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
+import Player from "react-player";
 import YouTube from "react-youtube";
 import { Course, Lesson } from "types";
 
@@ -33,8 +34,9 @@ const CourseView: React.FC<Props> = ({ data }) => {
       <HStack>
         <Box h="380px">
           {lesson?.youtubeVideoId ? (
-            <YouTube videoId={lesson?.youtubeVideoId} />
+            <YouTube videoId={lesson.youtubeVideoId} />
           ) : null}
+          {lesson?.videoUrl ? <Player url={lesson.videoUrl} /> : null}
         </Box>
         {/* lesson list */}
         <Box h="380px" overflow="auto">
